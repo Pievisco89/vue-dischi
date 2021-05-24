@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <div>
+    <div v-if="!loading">
       <HeaderComp />
     </div>
 
-    <div class="container text-center p-5">
+    <div 
+      v-if="!loading"
+      class="container text-center p-5"
+    >
       <div class="row">
+
         <AlbumComp 
           v-for="(disc, index) in discs"
           :key="index"
@@ -15,6 +19,9 @@
       </div>
     </div>
 
+    <div v-else>
+      <LoaderComp />
+    </div>
   </div>
 </template>
 
@@ -22,7 +29,7 @@
 import axios from 'axios';
 import HeaderComp from '@/components/HeaderComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
-
+import LoaderComp from '@/components/LoaderComp.vue';
 
 
 export default {
@@ -30,18 +37,23 @@ export default {
   data(){
     return {
       axios,
-      discs: []
+      discs: [],
+      loading: true,
     }
   },
   components: {
     AlbumComp,
-    HeaderComp
+    HeaderComp,
+    LoaderComp
   }, 
   created(){
     axios.get('https://flynn.boolean.careers/exercises/api/array/music')
       .then(resp => {
         this.discs = resp.data.response;
         console.log(resp.data.response);
+        setTimeout(()=> {
+          this.loading = false;
+        }, 2500)
       })
       .catch(err => {
         console.log(err);
