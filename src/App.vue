@@ -1,10 +1,10 @@
 <template>
   <div id="app">
+    <div>
+      <HeaderComp />
+    </div>
 
-    <div class="container text-center mt-35">
-
-      <h2>Dischi</h2>
-
+    <div class="container text-center p-5">
       <div class="row">
         <AlbumComp 
           v-for="(disc, index) in discs"
@@ -20,7 +20,9 @@
 
 <script>
 import axios from 'axios';
+import HeaderComp from '@/components/HeaderComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
+
 
 
 export default {
@@ -33,6 +35,7 @@ export default {
   },
   components: {
     AlbumComp,
+    HeaderComp
   }, 
   created(){
     axios.get('https://flynn.boolean.careers/exercises/api/array/music')
