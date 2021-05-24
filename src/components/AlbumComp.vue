@@ -30,12 +30,10 @@ export default {
 <style lang="scss" scoped>
   div{
     background-color: #3c3741;
+    min-width: 180px;
     &:hover{
       cursor: pointer;
       transform: scale(1.02);
-    }
-    img{
-      width: 160px;
     }
     h2{
       font-size: 1.25rem;
