@@ -1,28 +1,54 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <div class="container text-center mt-35">
+
+      <h2>Dischi</h2>
+
+      <div class="row">
+        <AlbumComp 
+          v-for="(disc, index) in discs"
+          :key="index"
+          :album="disc" 
+        />
+       
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
+import AlbumComp from '@/components/AlbumComp.vue';
+
 
 export default {
   name: 'App',
+  data(){
+    return {
+      axios,
+      discs: []
+    }
+  },
   components: {
-    HelloWorld
-  }
+    AlbumComp,
+  }, 
+  created(){
+    axios.get('https://flynn.boolean.careers/exercises/api/array/music')
+      .then(resp => {
+        this.discs = resp.data.response;
+        console.log(resp.data.response);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  },
+  
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import '@/assets/style/general.scss';
+
 </style>
