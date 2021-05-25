@@ -2,22 +2,29 @@
   <div id="app">
     <div v-if="!loading">
       <HeaderComp />
+
     </div>
 
     <div 
       v-if="!loading"
-      class="container text-center p-5"
+      class="container p-5"
     >
       <div class="row">
+        
+        <GenreComp 
+          @chosenGenre="musicGenre"
+        />
 
         <AlbumComp 
-          v-for="(disc, index) in discs"
+          v-for="(disc, index) in filteredDiscs"
           :key="index"
           :album="disc" 
         />
-       
+
       </div>
+    
     </div>
+
 
     <div v-else>
       <LoaderComp />
@@ -30,6 +37,8 @@ import axios from 'axios';
 import HeaderComp from '@/components/HeaderComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
 import LoaderComp from '@/components/LoaderComp.vue';
+import GenreComp from '@/components/GenreComp.vue';
+
 
 
 export default {
@@ -39,27 +48,46 @@ export default {
       axios,
       discs: [],
       loading: true,
+      genreText: ''
     }
   },
   components: {
     AlbumComp,
     HeaderComp,
-    LoaderComp
+    LoaderComp,
+    GenreComp
   }, 
   created(){
     axios.get('https://flynn.boolean.careers/exercises/api/array/music')
       .then(resp => {
         this.discs = resp.data.response;
         console.log(resp.data.response);
-        setTimeout(()=> {
+        /* setTimeout(()=> {
           this.loading = false;
-        }, 2500)
+        }, 1000) */
+        this.loading = false;
       })
       .catch(err => {
         console.log(err);
       })
   },
-  
+  methods:{
+    musicGenre(text){
+      this.genreText = text;
+      console.log(this.genreText);
+    }
+  },
+  computed:{
+    filteredDiscs(){
+      if(this.genreText === ''){
+        return this.discs;
+      }
+      
+      return this.discs.filter(item => {
+        this.genreText === item.genre;
+      })
+    }
+  }
 }
 </script>
 
