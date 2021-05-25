@@ -9,7 +9,7 @@
       <option disabled value="">Scegli un genere</option>
       <option>Pop</option>
       <option>Rock</option>
-      <option >Jazz</option>
+      <option>Jazz</option>
       <option>Metal</option>
     </select>
     

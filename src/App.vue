@@ -47,6 +47,7 @@ export default {
     return {
       axios,
       discs: [],
+      genres: [],
       loading: true,
       genreText: ''
     }
@@ -61,6 +62,12 @@ export default {
     axios.get('https://flynn.boolean.careers/exercises/api/array/music')
       .then(resp => {
         this.discs = resp.data.response;
+        resp.data.response.forEach(item => {
+          if (!this.genres.includes(item.genre)) {
+            this.genres.push(item.genre);
+          }
+          console.log(this.genres);
+        });
         console.log(resp.data.response);
         /* setTimeout(()=> {
           this.loading = false;
@@ -74,19 +81,19 @@ export default {
   methods:{
     musicGenre(text){
       this.genreText = text;
-      console.log(this.genreText);
     }
   },
   computed:{
     filteredDiscs(){
+
       if(this.genreText === ''){
         return this.discs;
       }
       
-      return this.discs.filter(item => {
-        this.genreText === item.genre;
-      })
+      return this.discs.filter(item => this.genreText === item.genre)
+      
     }
+
   }
 }
 </script>
