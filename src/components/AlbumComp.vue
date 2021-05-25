@@ -15,7 +15,6 @@
       class="mt-5"
     > {{album.author}} </h5>
     <h6> {{album.year}}</h6>
-    <h6> {{album.genre}}</h6>
 
   </div>
 </template>

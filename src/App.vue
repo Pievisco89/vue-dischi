@@ -12,6 +12,7 @@
       <div class="row">
         
         <GenreComp 
+          :genres="genres"
           @chosenGenre="musicGenre"
         />
 
@@ -62,16 +63,12 @@ export default {
     axios.get('https://flynn.boolean.careers/exercises/api/array/music')
       .then(resp => {
         this.discs = resp.data.response;
+        //ciclo forEach per pushare all'interno dell'array genres tutti i generi musicali
         resp.data.response.forEach(item => {
-          if (!this.genres.includes(item.genre)) {
+          if (!this.genres.includes(item.genre)) { 
             this.genres.push(item.genre);
           }
-          console.log(this.genres);
         });
-        console.log(resp.data.response);
-        /* setTimeout(()=> {
-          this.loading = false;
-        }, 1000) */
         this.loading = false;
       })
       .catch(err => {
